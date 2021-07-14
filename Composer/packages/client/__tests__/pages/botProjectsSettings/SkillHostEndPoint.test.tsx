@@ -3,9 +3,7 @@
 
 import React from 'react';
 import { act, fireEvent } from '@botframework-composer/test-utils';
-import debounce from 'lodash/debounce';
 import sinon from 'sinon';
-import { ColorPicker } from 'office-ui-fabric-react';
 
 import { SkillHostEndPoint } from '../../../src/pages/botProject/SkillHostEndPoint';
 import { renderWithRecoilAndCustomDispatchers } from '../../testUtils';
