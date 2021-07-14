@@ -3,6 +3,9 @@
 
 import React from 'react';
 import { act, fireEvent } from '@botframework-composer/test-utils';
+import debounce from 'lodash/debounce';
+import sinon from 'sinon';
+import { ColorPicker } from 'office-ui-fabric-react';
 
 import { SkillHostEndPoint } from '../../../src/pages/botProject/SkillHostEndPoint';
 import { renderWithRecoilAndCustomDispatchers } from '../../testUtils';
@@ -18,6 +21,13 @@ const state = {
 };
 
 describe('SkillHostEndPoint', () => {
+  let clock;
+  beforeEach(() => {
+    clock = sinon.useFakeTimers();
+  });
+  afterEach(() => {
+    clock.restore();
+  });
   it('should submit settings', async () => {
     const setSettingsMock = jest.fn();
     const initRecoilState = ({ set }) => {
@@ -38,6 +48,7 @@ describe('SkillHostEndPoint', () => {
       });
       await fireEvent.blur(textField);
     });
+    clock.tick(500);
     expect(setSettingsMock).toBeCalledWith('test', {
       defaultLanguage: 'en-us',
       languages: ['en-us', 'fr-fr'],
